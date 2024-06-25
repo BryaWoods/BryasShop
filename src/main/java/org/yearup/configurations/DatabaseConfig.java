@@ -6,13 +6,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.sql.DataSource;
+
 @Configuration
 public class DatabaseConfig
 {
     private BasicDataSource basicDataSource;
 
     @Bean
-    public BasicDataSource dataSource()
+    public DataSource dataSource()
     {
         return basicDataSource;
     }
