@@ -1,5 +1,10 @@
 package org.yearup.models;
 
+import org.springframework.http.HttpStatus;
+import org.yearup.data.ShoppingCartDao;
+import org.yearup.data.UserDao;
+
+import java.security.Principal;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,5 +47,7 @@ public class ShoppingCart
 
         return total;
     }
+
+
 
 }

@@ -28,8 +28,8 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
                  ResultSet resultSet = statement.executeQuery()) {
 
                 while (resultSet.next()) {
-                    int categoryID = resultSet.getInt("CategoryID");
-                    String categoryName = resultSet.getString("CategoryName");
+                    int categoryID = resultSet.getInt("Category_ID");
+                    String categoryName = resultSet.getString("name");
                     String description = resultSet.getString("description");
                     Category category = new Category(categoryID, categoryName,description);
                     categories.add(category);
@@ -45,15 +45,15 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
     @Override
     public Category getById(int categoryId)
     {
-        String sql = "SELECT * FROM Categories WHERE CategoryID = ?";
+        String sql = "SELECT * FROM Categories WHERE Category_ID = ?";
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setInt(1, categoryId);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    int categoryID = resultSet.getInt("CategoryID");
-                    String categoryName = resultSet.getString("CategoryName");
+                    int categoryID = resultSet.getInt("Category_ID");
+                    String categoryName = resultSet.getString("Name");
                     String description = resultSet.getString("description");
                     Category category = new Category(categoryID, categoryName,description);
                     return category;
@@ -102,9 +102,9 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
     public void update(int categoryId, Category category)
     {
         String sql = "UPDATE Categories" +
-                "SET CategoryName = ?" +
+                "SET Name = ?" +
                 " , description = ? " +
-                "WHERE CategoryID = ?";
+                "WHERE Category_ID = ?";
 
         try (Connection connection = getConnection();
 
@@ -123,7 +123,7 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao {
     @Override
     public void delete(int categoryId)
     {
-        String sql = "DELETE FROM Categories WHERE CategoryID = ?";
+        String sql = "DELETE FROM Categories WHERE Category_ID = ?";
 
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {

@@ -42,7 +42,7 @@ public class CategoriesController {
 
     // the url to return all products in category 1 would look like this
     // https://localhost:8080/categories/1/products
-    @GetMapping("{categoryId}/products")
+    @GetMapping("{category_Id}/products")
     @PreAuthorize("permitAll()")
     public List<Product> getProductsById(@PathVariable int categoryId) {
         // get a list of product by categoryId
