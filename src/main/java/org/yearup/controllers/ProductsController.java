@@ -45,20 +45,21 @@ public class ProductsController
     @GetMapping("{id}")
     @PreAuthorize("permitAll()")
     public Product getById(@PathVariable int id )
-    {
+    { Product product = null;
         try
         {
-            var product = productDao.getById(id);
+            product = productDao.getById(id);
 
-            if(product == null)
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
-            return product;
         }
         catch(Exception ex)
         {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
         }
+        if(product == null)
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
+        return product;
     }
 
     @PostMapping()

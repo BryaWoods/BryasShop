@@ -8,6 +8,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.yearup.data.ProductDao;
 import org.yearup.data.ShoppingCartDao;
 import org.yearup.data.UserDao;
+import org.yearup.data.mysql.MySqlShoppingCartDao;
 import org.yearup.models.ShoppingCart;
 import org.yearup.models.ShoppingCartItem;
 import org.yearup.models.User;
@@ -54,9 +55,16 @@ public class ShoppingCartController {
             if (user == null) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found.");
             }
+
             System.out.println("Adding product to cart: User ID: " + user.getId() + ", Product ID: " + productId); // Debug statement
+
+            // Add product to cart using both methods
             shoppingCartDao.addProductToCart(user.getId(), productId);
-            return shoppingCartDao.getCartByUserId(user.getId());
+            ShoppingCartItem cartItem = shoppingCartDao.getShoppingCartItemByProductId(productId);// Add to existing method
+            int quantity = cartItem.getQuantity(); // Or retrieve the quantity from request if needed
+            shoppingCartDao.addCartItem(user.getId(), productId, quantity); // Add to new method for order_line_items
+
+            return shoppingCartDao.getCartByUserId(user.getId()); // Return updated shopping cart
         } catch (Exception e) {
             e.printStackTrace(); // Add this line for debugging
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.", e);
